@@ -19,7 +19,6 @@
   "bugs": {
     "url": "https://github.com/ReDBrother/codebattle_bot/issues"
   },
-  "type": "module",
   "jest": {
     "testEnvironment": "node",
     "transform": {}

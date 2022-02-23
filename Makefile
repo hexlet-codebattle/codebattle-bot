@@ -1,7 +1,11 @@
+PWD:=$(shell pwd)
+
+kb-%: export KUBECONFIG=$(PWD)/kubeconfig.yml
+
 install: install-deps install-env
 
 run:
-	bin/client.js
+	./bin/client.js
 
 install-env:
 	cp env.template .env
@@ -21,4 +25,16 @@ lint:
 publish:
 	npm publish
 
-.PHONY: test
+docker-build:
+	docker pull codebattle/discord-bot:latest || true
+	docker build --cache-from=codebattle/discord-bot:latest --tag codebattle/discord-bot:latest .
+
+docker-push:
+	docker push codebattle/discord-bot:latest
+
+kb-deploy:
+	kubectl apply -f deployment.yaml
+
+kb-k9s:
+	k9s
+.PHONY: test run
